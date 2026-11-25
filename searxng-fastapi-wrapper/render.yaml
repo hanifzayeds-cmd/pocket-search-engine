@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: searxng-fastapi-wrapper
+    runtime: python
+    plan: free # Change to 'starter' or higher for production use
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: SEARXNG_BASE_URL
+        sync: false # You will set this in the Render dashboard
+      - key: PYTHON_VERSION
+        value: 3.12.0
